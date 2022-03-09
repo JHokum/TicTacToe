@@ -46,3 +46,20 @@ const Player = function(select){
 //Computer player object will inherit Player
 
 // Display.displayBoard(Gameboard.gameboard);
+// const mark = document.querySelector(".mark");
+// mark.addEventListener("click",e=>e.target.textContent="meow");
+
+const markArray = function(){
+    const markNodes = document.querySelectorAll(".mark");
+    
+    return Array.from(markNodes);
+}
+
+const addEventListeners = function(markArray){
+    for (let mark of markArray){
+        console.log(mark)
+        mark.addEventListener("click",e=>e.target.textContent="Z");
+    }
+}
+
+addEventListeners(markArray());

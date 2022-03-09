@@ -25,6 +25,9 @@ body{
     align-items:center;
 }
 .mark{
+    text-align: center;
     border:2px magenta solid;
+    height:100%;
+    width: 210px;
     font-size:200px
 }
