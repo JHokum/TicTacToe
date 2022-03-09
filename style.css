@@ -1,6 +1,30 @@
+html{
+    height:100%;
+    width: auto;
+}
+
+body{
+    height:100%;
+    width:auto;
+}
+
 .gameBoard{
     display:grid;
+    height: 100%;
+    width: auto;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
+   
 
+}
+
+.markBox{
+    border:2px red solid;
+    display: grid;
+    justify-items:center;
+    align-items:center;
+}
+.mark{
+    border:2px magenta solid;
+    font-size:200px
 }

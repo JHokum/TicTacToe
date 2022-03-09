@@ -45,4 +45,4 @@ const Player = function(select){
 
 //Computer player object will inherit Player
 
-Display.displayBoard(Gameboard.gameboard);
+// Display.displayBoard(Gameboard.gameboard);
