@@ -47,26 +47,31 @@ const Display = (function(){
 
 //Player factory
 const Player = function(select){
-    const name = "";
-    const marker="";
+    let name = "";
+    
     
     //Will return Human or computer
     
     switch(select){
         case 1:
             name="Human";
-            marker="X";
-            return {name,marker};
+            
+            return {name};
+            
         case 2:
             name="Computer";
-            marker="O";
-            return {name,marker};
+            
+            return {name};
         default:
-            return {};
+            break;
     }
 }
 //Human player object will inherit Player
-
+const Human = function(marker){
+    const playerMarker=marker;
+    const prototype = Player(1);
+    return Object.assign({},prototype,{playerMarker});
+}
 //Computer player object will inherit Player
 
 
@@ -79,24 +84,37 @@ const markArray = function(){
 
 
 //placeholder function to determine the marker for the turn
-const playerTurn = function(turn){
-    let marker = "";
-    if (turn==1){
-        marker="x";
-    }
-    else
-        marker="O";
-    return marker;
+const playerTurn = function(player){
+    return player.playerMarker
 }
 
+//change the turn
+const changeTurn = function(){
+    if (turn==player1){
+        turn=player2;
+    }
+    else{
+        turn=player1;
+    }
+}
+
+//Listener function
+const listenerFunction = function(e){
+    e.target.textContent=playerTurn(turn);
+    changeTurn();
+}
 //function for adding listeners
 const addEventListeners = function(markArray){
     for (let mark of markArray){
         
-        mark.addEventListener("click",e=>e.target.textContent=playerTurn(2));
+        // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
+        mark.addEventListener("click",listenerFunction);
     }
 }
 
 
 //add event listeners to mark boxes
+const player1 = Human("X");
+const player2 = Human("O");
+let turn = player1;
 addEventListeners(markArray());
