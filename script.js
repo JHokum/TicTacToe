@@ -99,11 +99,16 @@ const Game = (function(){
 //Gameboard module
 const Gameboard = (function(){
     const gameboard = ["","","","","","","","",""];  //gameboard array
-    const changeMark = function(){                  //function to change mark in array
-        gameboard[3]="O";
+    const colBoard = [["","",""],["","",""],["","",""]];
+    const rowBoard = [["","",""],["","",""],["","",""]];
+    const changeMark = function(col,row){                  //function to change mark in array
+        colBoard[col][row]="meow";
+        rowBoard[row][col]="meow";
     }
+    const getColBoard = () => colBoard;
+    const getRowBoard = () => rowBoard;
     
-    return {gameboard, changeMark}
+    return {gameboard,colBoard,rowBoard,getRowBoard,getColBoard, changeMark}
 })();
 
 
@@ -145,6 +150,9 @@ const playerTurn = function(player){
 const listenerFunction = function(e){
     e.target.textContent=playerTurn(Game.getTurn());
     Game.changeTurn();
+    
+    Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row)
+    e.target.removeEventListener("click",listenerFunction);
 }
 //function for adding listeners
 const addEventListeners = function(markArray){
@@ -162,16 +170,19 @@ const addEventListeners = function(markArray){
 
 // addEventListeners(markArray());
 const header = document.querySelector(".header");
-Game.gameStart(2);
+// Game.gameStart(2);
 
-//workzone
+//workzone -------------------------------------------------
 const pvpButton = document.getElementById("pvp");
 
 const pvpListenerFunction = function(){
-    Game.gameStart();
+    Game.gameStart(1);
     addEventListeners(markArray());
 }
 
 pvpButton.addEventListener("click",pvpListenerFunction);
 
 //game creator
+
+
+//win check
