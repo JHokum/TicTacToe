@@ -101,9 +101,9 @@ const Gameboard = (function(){
     const gameboard = ["","","","","","","","",""];  //gameboard array
     const colBoard = [["","",""],["","",""],["","",""]];
     const rowBoard = [["","",""],["","",""],["","",""]];
-    const changeMark = function(col,row){                  //function to change mark in array
-        colBoard[col][row]="meow";
-        rowBoard[row][col]="meow";
+    const changeMark = function(col,row,mark){                  //function to change mark in array
+        colBoard[col][row]=mark;
+        rowBoard[row][col]=mark;
     }
     const getColBoard = () => colBoard;
     const getRowBoard = () => rowBoard;
@@ -151,7 +151,7 @@ const listenerFunction = function(e){
     e.target.textContent=playerTurn(Game.getTurn());
     Game.changeTurn();
     
-    Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row)
+    Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
     e.target.removeEventListener("click",listenerFunction);
 }
 //function for adding listeners
@@ -186,3 +186,14 @@ pvpButton.addEventListener("click",pvpListenerFunction);
 
 
 //win check
+/* Based on the selection we know where we are in the row or column.
+Based on the row or column we can look at the row and column to check for win condition.
+There is probably an array we can use for this.*/
+const winCheck = function(col,row){
+    for(let moo of Gameboard.getColBoard()[col]){
+        console.log(moo);
+    }
+    for(let baka of Gameboard.getRowBoard()[row]){
+        console.log(baka);
+    }
+}
