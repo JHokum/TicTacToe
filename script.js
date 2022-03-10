@@ -37,9 +37,10 @@ const Human = function(marker){
 
 
 //Game module
-const Game = (function(gameType){
+const Game = (function(){
     let player1;
     let player2;
+    let turn;
     
     let state = true;
     const changeState =function(){   //will change the state of the game
@@ -50,26 +51,49 @@ const Game = (function(gameType){
             state=true;
         }
     }
-
-    switch(gameType){
+    const gameStart = function(gameType){
+        switch(gameType){
         
-        case(1):
-            player1 = Human("x");
-            player2 = Human("o");
-            break;
-        case(2):
-            player1 = Human("x");
-            player2 = Human("z");
-            break;
-        default:
-            break;
+            case(1):
+                player1 = Human("x");
+                player2 = Human("o");
+                turn = player1;
+                break;
+            case(2):
+                player1 = Human("x");
+                player2 = Human("z");
+                turn = player1;
+                break;
+            default:
+                break;
+        }
     }
 
+    //change the turn
+    const changeTurn = function(){
+        if (turn==player1){
+            turn=player2;
+        }
+        else{
+            turn=player1;
+        }
+    }
+    const getTurn = ()=>turn;
     const getState = ()=>state;    //getter for state
-    return {state,player1,player2,changeState,getState}   //return game object
-})(2)    //module
+    const getPlayer = function(select){
+        switch(select){
+            case(1):
+                return player1;
+            case(2):
+                return player2;
+            default:
+                break;
+        }
+    }
+    return {gameStart,changeState,getState,getPlayer,getTurn,changeTurn}   //return game object
+})()    //module
 
-const header = document.querySelector(".header");
+
 
 
 //Gameboard module
@@ -115,20 +139,12 @@ const playerTurn = function(player){
     return player.playerMarker
 }
 
-//change the turn
-const changeTurn = function(){
-    if (turn==player1){
-        turn=player2;
-    }
-    else{
-        turn=player1;
-    }
-}
+
 
 //Listener function
 const listenerFunction = function(e){
-    e.target.textContent=playerTurn(turn);
-    changeTurn();
+    e.target.textContent=playerTurn(Game.getTurn());
+    Game.changeTurn();
 }
 //function for adding listeners
 const addEventListeners = function(markArray){
@@ -143,21 +159,19 @@ const addEventListeners = function(markArray){
 //add event listeners to mark boxes
 // const player1 = Human("X");
 // const player2 = Human("O");
-let player1;
-let player2;
-let turn;
+
 // addEventListeners(markArray());
-
-
+const header = document.querySelector(".header");
+Game.gameStart(2);
 
 //workzone
 const pvpButton = document.getElementById("pvp");
 
 const pvpListenerFunction = function(){
-    player1 = Human("X");
-    player2 = Human("O");
-    turn = player1;
+    Game.gameStart();
     addEventListeners(markArray());
 }
 
 pvpButton.addEventListener("click",pvpListenerFunction);
+
+//game creator
