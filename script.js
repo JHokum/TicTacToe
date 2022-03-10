@@ -2,7 +2,7 @@
 //Game module
 const Game = (function(){
     let state = true;
-    const changeState =function(){
+    const changeState =function(){   //will change the state of the game
         if (state==true){
             state=false;
         }
@@ -11,20 +11,25 @@ const Game = (function(){
         }
     }
 
-    const getState = ()=>state;
-    return {state,changeState,getState}
-})()
+    const getState = ()=>state;    //getter for state
+    return {state,changeState,getState}   //return game object
+})()    //module
 
 const header = document.querySelector(".header");
 
 
 //Gameboard module
 const Gameboard = (function(){
-    const gameboard = ['X','O','O','O','X','X','X','X','O'];
+    const gameboard = ["","","","","","","","",""];  //gameboard array
+    const changeMark = function(){                  //function to change mark in array
+        gameboard[3]="O";
+    }
     
-    return {gameboard}
+    return {gameboard, changeMark}
 })();
 
+
+//WIP Display module
 const Display = (function(){
     const displayBoard = function(gameboard){
         const body = document.querySelector("body");
@@ -64,21 +69,34 @@ const Player = function(select){
 
 //Computer player object will inherit Player
 
-// Display.displayBoard(Gameboard.gameboard);
-// const mark = document.querySelector(".mark");
-// mark.addEventListener("click",e=>e.target.textContent="meow");
 
+//returns an array from node list
 const markArray = function(){
     const markNodes = document.querySelectorAll(".mark");
     
     return Array.from(markNodes);
 }
 
+
+//placeholder function to determine the marker for the turn
+const playerTurn = function(turn){
+    let marker = "";
+    if (turn==1){
+        marker="x";
+    }
+    else
+        marker="O";
+    return marker;
+}
+
+//function for adding listeners
 const addEventListeners = function(markArray){
     for (let mark of markArray){
-        console.log(mark)
-        mark.addEventListener("click",e=>e.target.textContent="Z");
+        
+        mark.addEventListener("click",e=>e.target.textContent=playerTurn(2));
     }
 }
 
+
+//add event listeners to mark boxes
 addEventListeners(markArray());

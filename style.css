@@ -9,11 +9,11 @@ body{
 }
 
 .header{
-    height:150px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: radial-gradient(orange, magenta);
-    text-align: center;
-    line-height:140px;
-    font-size: 3rem;
 }
 
 .gameBoard{
@@ -31,6 +31,9 @@ body{
     display: grid;
     justify-items:center;
     align-items:center;
+}
+.markBox:hover{
+    background-color:orange;
 }
 .mark{
     text-align: center;
