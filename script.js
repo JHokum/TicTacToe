@@ -72,8 +72,12 @@ const Human = function(marker){
     const prototype = Player(1);
     return Object.assign({},prototype,{playerMarker});
 }
-//Computer player object will inherit Player
-
+//Computer player object will inherit Player (module)
+ const Computer = (function(marker){
+     const compMarker=marker;
+     const prototype = Player(2);
+     return Object.assign({},prototype,{compMarker});
+ })()
 
 //returns an array from node list
 const markArray = function(){
@@ -114,7 +118,23 @@ const addEventListeners = function(markArray){
 
 
 //add event listeners to mark boxes
-const player1 = Human("X");
-const player2 = Human("O");
-let turn = player1;
-addEventListeners(markArray());
+// const player1 = Human("X");
+// const player2 = Human("O");
+let player1;
+let player2;
+let turn;
+// addEventListeners(markArray());
+
+
+
+//workzone
+const pvpButton = document.getElementById("pvp");
+
+const pvpListenerFunction = function(){
+    player1 = Human("X");
+    player2 = Human("O");
+    turn = player1;
+    addEventListeners(markArray());
+}
+
+pvpButton.addEventListener("click",pvpListenerFunction);
