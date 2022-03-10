@@ -1,4 +1,23 @@
 
+//Game module
+const Game = (function(){
+    let state = true;
+    const changeState =function(){
+        if (state==true){
+            state=false;
+        }
+        else{
+            state=true;
+        }
+    }
+
+    const getState = ()=>state;
+    return {state,changeState,getState}
+})()
+
+const header = document.querySelector(".header");
+
+
 //Gameboard module
 const Gameboard = (function(){
     const gameboard = ['X','O','O','O','X','X','X','X','O'];
