@@ -1,6 +1,46 @@
 
+//Player factory
+const Player = function(select){
+    let name = "";
+    
+    
+    //Will return Human or computer
+    
+    switch(select){
+        case 1:
+            name="Human";
+            
+            return {name};
+            
+        case 2:
+            name="Computer";
+            
+            return {name};
+        default:
+            break;
+    }
+}
+
+//Human player object will inherit Player
+const Human = function(marker){
+    const playerMarker=marker;
+    const prototype = Player(1);
+    return Object.assign({},prototype,{playerMarker});
+}
+//Computer player object will inherit Player (module)
+ const Computer = (function(marker){
+     const compMarker=marker;
+     const prototype = Player(2);
+     return Object.assign({},prototype,{compMarker});
+ })()
+
+
+
 //Game module
-const Game = (function(){
+const Game = (function(gameType){
+    let player1;
+    let player2;
+    
     let state = true;
     const changeState =function(){   //will change the state of the game
         if (state==true){
@@ -11,9 +51,23 @@ const Game = (function(){
         }
     }
 
+    switch(gameType){
+        
+        case(1):
+            player1 = Human("x");
+            player2 = Human("o");
+            break;
+        case(2):
+            player1 = Human("x");
+            player2 = Human("z");
+            break;
+        default:
+            break;
+    }
+
     const getState = ()=>state;    //getter for state
-    return {state,changeState,getState}   //return game object
-})()    //module
+    return {state,player1,player2,changeState,getState}   //return game object
+})(2)    //module
 
 const header = document.querySelector(".header");
 
@@ -45,39 +99,8 @@ const Display = (function(){
     
 })()
 
-//Player factory
-const Player = function(select){
-    let name = "";
-    
-    
-    //Will return Human or computer
-    
-    switch(select){
-        case 1:
-            name="Human";
-            
-            return {name};
-            
-        case 2:
-            name="Computer";
-            
-            return {name};
-        default:
-            break;
-    }
-}
-//Human player object will inherit Player
-const Human = function(marker){
-    const playerMarker=marker;
-    const prototype = Player(1);
-    return Object.assign({},prototype,{playerMarker});
-}
-//Computer player object will inherit Player (module)
- const Computer = (function(marker){
-     const compMarker=marker;
-     const prototype = Player(2);
-     return Object.assign({},prototype,{compMarker});
- })()
+
+
 
 //returns an array from node list
 const markArray = function(){
