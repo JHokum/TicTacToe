@@ -25,7 +25,8 @@ const Player = function(select){
 const Human = function(marker){
     const playerMarker=marker;
     const prototype = Player(1);
-    return Object.assign({},prototype,{playerMarker});
+    const getPlayerMarker = ()=>playerMarker;
+    return Object.assign({},prototype,{playerMarker,getPlayerMarker});
 }
 //Computer player object will inherit Player (module)
  const Computer = (function(marker){
@@ -149,10 +150,15 @@ const playerTurn = function(player){
 //Listener function
 const listenerFunction = function(e){
     e.target.textContent=playerTurn(Game.getTurn());
-    Game.changeTurn();
+    
     
     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
+    if(winCheck(e.target.dataset.col,e.target.dataset.row)){
+        alert("Winner winner chicken dinner");
+    }
+    console.log(winCheck(e.target.dataset.col,e.target.dataset.row));
     e.target.removeEventListener("click",listenerFunction);
+    Game.changeTurn();
 }
 //function for adding listeners
 const addEventListeners = function(markArray){
@@ -190,10 +196,11 @@ pvpButton.addEventListener("click",pvpListenerFunction);
 Based on the row or column we can look at the row and column to check for win condition.
 There is probably an array we can use for this.*/
 const winCheck = function(col,row){
-    for(let moo of Gameboard.getColBoard()[col]){
-        console.log(moo);
-    }
-    for(let baka of Gameboard.getRowBoard()[row]){
-        console.log(baka);
-    }
+    return Gameboard.getColBoard()[col].every(markArrayChecker) || Gameboard.getRowBoard()[row].every(markArrayChecker);
+}
+
+const markArrayChecker = function(element){
+    
+   return element == Game.getTurn().getPlayerMarker();
+
 }
