@@ -155,6 +155,10 @@ const listenerFunction = function(e){
     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
     if(winCheck(e.target.dataset.col,e.target.dataset.row)){
         alert("Winner winner chicken dinner");
+        let zoop = Array.from(document.querySelectorAll("[data-row='1']"))
+        for (let zeep of zoop){
+            zeep.classList.add("winner");
+        }
     }
     console.log(winCheck(e.target.dataset.col,e.target.dataset.row));
     e.target.removeEventListener("click",listenerFunction);

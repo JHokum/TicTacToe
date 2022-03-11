@@ -42,3 +42,6 @@ body{
     width: 210px;
     font-size:200px
 }
+.winner{
+    background-color: fuchsia;
+}
