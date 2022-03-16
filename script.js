@@ -208,3 +208,5 @@ const markArrayChecker = function(element){
    return element == Game.getTurn().getPlayerMarker();
 
 }
+
+testy testy
