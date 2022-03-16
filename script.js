@@ -23,16 +23,16 @@ const Player = function(select){
 
 //Human player object will inherit Player
 const Human = function(marker){
-    const playerMarker=marker;
-    const prototype = Player(1);
-    const getPlayerMarker = ()=>playerMarker;
-    return Object.assign({},prototype,{playerMarker,getPlayerMarker});
+    const playerMarker=marker;  //set playerMarker to x or o
+    const prototype = Player(1);  //Human object from Player factory
+    const getPlayerMarker = ()=>playerMarker;    //playerMarker getter
+    return Object.assign({},prototype,{playerMarker,getPlayerMarker});  //return a completed object with combined prototype and Human object
 }
 //Computer player object will inherit Player (module)
  const Computer = (function(marker){
-     const compMarker=marker;
-     const prototype = Player(2);
-     return Object.assign({},prototype,{compMarker});
+     const compMarker=marker;  //compMarker set to x or o
+     const prototype = Player(2);  //Computer object from Player factory
+     return Object.assign({},prototype,{compMarker});  //return a completed object with combined prototype and Computer object
  })()
 
 
@@ -53,7 +53,7 @@ const Game = (function(){
         }
     }
     const gameStart = function(gameType){
-        switch(gameType){
+        switch(gameType){  //player vs player or vs cpu
         
             case(1):
                 player1 = Human("x");
@@ -79,9 +79,9 @@ const Game = (function(){
             turn=player1;
         }
     }
-    const getTurn = ()=>turn;
+    const getTurn = ()=>turn;      //getter for turn
     const getState = ()=>state;    //getter for state
-    const getPlayer = function(select){
+    const getPlayer = function(select){   //get player1 or player2
         switch(select){
             case(1):
                 return player1;
@@ -100,14 +100,14 @@ const Game = (function(){
 //Gameboard module
 const Gameboard = (function(){
     const gameboard = ["","","","","","","","",""];  //gameboard array
-    const colBoard = [["","",""],["","",""],["","",""]];
-    const rowBoard = [["","",""],["","",""],["","",""]];
+    const colBoard = [["","",""],["","",""],["","",""]];  //arranged as an array of columns
+    const rowBoard = [["","",""],["","",""],["","",""]];  //arranged as an array of rows
     const changeMark = function(col,row,mark){                  //function to change mark in array
         colBoard[col][row]=mark;
         rowBoard[row][col]=mark;
     }
-    const getColBoard = () => colBoard;
-    const getRowBoard = () => rowBoard;
+    const getColBoard = () => colBoard;  //get column array
+    const getRowBoard = () => rowBoard;  //get row array
     
     return {gameboard,colBoard,rowBoard,getRowBoard,getColBoard, changeMark}
 })();
