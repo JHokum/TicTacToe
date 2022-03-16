@@ -148,19 +148,39 @@ const playerTurn = function(player){
 
 
 //Listener function
+// const listenerFunction = function(e){
+//     e.target.textContent=playerTurn(Game.getTurn());
+    
+    
+//     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
+//     if(winCheck(e.target.dataset.col,e.target.dataset.row)){
+//         alert("Winner winner chicken dinner");
+//         let zoop = Array.from(document.querySelectorAll("[data-row='1']"))
+//         for (let zeep of zoop){
+//             zeep.classList.add("winner");
+//         }
+//     }
+//     console.log(winCheck(e.target.dataset.col,e.target.dataset.row));
+//     e.target.removeEventListener("click",listenerFunction);
+//     Game.changeTurn();
+// }
+// //function for adding listeners
+// const addEventListeners = function(markArray){
+//     for (let mark of markArray){
+        
+//         // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
+//         mark.addEventListener("click",listenerFunction);
+//     }
+// }
+
 const listenerFunction = function(e){
     e.target.textContent=playerTurn(Game.getTurn());
     
     
     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
-    if(winCheck(e.target.dataset.col,e.target.dataset.row)){
-        alert("Winner winner chicken dinner");
-        let zoop = Array.from(document.querySelectorAll("[data-row='1']"))
-        for (let zeep of zoop){
-            zeep.classList.add("winner");
-        }
-    }
-    console.log(winCheck(e.target.dataset.col,e.target.dataset.row));
+
+    winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col);
+
     e.target.removeEventListener("click",listenerFunction);
     Game.changeTurn();
 }
@@ -214,7 +234,7 @@ const winCheckModule = (function(){
     const markArrayChecker = function(element){
     
         // return element == Game.getTurn().getPlayerMarker();
-        return element == playerTurnThenMarker;  //check if matches playermarker
+        return element == Game.getTurn().getPlayerMarker();  //check if matches playermarker
      
      }
 
@@ -229,15 +249,15 @@ const winCheckModule = (function(){
 
     const winHighLight = function(gameboardCol, gameboardRow,row, col){
         if (winCheckRowHelper(gameboardRow,row)){
-            alert("row is a winner");
+            // alert("row is a winner");
             let rowArray = Array.from(document.querySelectorAll(`[data-row="${row}"]`))
             for (let element of rowArray){
                 element.classList.add("winner");
             }
         }
         else if (winCheckColHelper(gameboardCol,col)){
-            alert("col is a winner");
-            let colArray = Array.from(document.querySelectorAll(`[data-row="${col}"]`))
+            // alert("col is a winner");
+            let colArray = Array.from(document.querySelectorAll(`[data-col="${col}"]`))
             for (let element of colArray){
                 element.classList.add("winner");
             }
