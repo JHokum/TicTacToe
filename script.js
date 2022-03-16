@@ -203,10 +203,48 @@ const winCheck = function(col,row){
     return Gameboard.getColBoard()[col].every(markArrayChecker) || Gameboard.getRowBoard()[row].every(markArrayChecker);
 }
 
-const markArrayChecker = function(element){
+
+
+
+//Define a winchecker module
+/* Module can take in a Gameboard object to investigate and manipulate.
+   Module is responsible for checking for win condition and setting the winner class.*/
+
+const winCheckModule = (function(){
+    const markArrayChecker = function(element){
     
-   return element == Game.getTurn().getPlayerMarker();
+        // return element == Game.getTurn().getPlayerMarker();
+        return element == playerTurnThenMarker;  //check if matches playermarker
+     
+     }
 
-}
 
-testy testy
+    const winCheckRowHelper = function(rowArray,row){
+        return rowArray[row].every(markArrayChecker);
+    }
+
+    const winCheckColHelper = function(colArray,col){
+        return colArray[col].every(markArrayChecker)
+    }
+
+    const winHighLight = function(gameboardCol, gameboardRow,row, col){
+        if (winCheckRowHelper(gameboardRow,row)){
+            alert("row is a winner");
+            let rowArray = Array.from(document.querySelectorAll(`[data-row="${row}"]`))
+            for (let element of rowArray){
+                element.classList.add("winner");
+            }
+        }
+        else if (winCheckColHelper(gameboardCol,col)){
+            alert("col is a winner");
+            let colArray = Array.from(document.querySelectorAll(`[data-row="${col}"]`))
+            for (let element of colArray){
+                element.classList.add("winner");
+            }
+        }
+    }
+
+   
+
+    return {winHighLight}
+})()
