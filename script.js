@@ -114,20 +114,20 @@ const Gameboard = (function(){
 
 
 //WIP Display module
-const Display = (function(){
-    const displayBoard = function(gameboard){
-        const body = document.querySelector("body");
-        console.log(gameboard);
-        for (let marker of gameboard){
-            let mark = document.createElement("span");
-            mark.textContent=marker;
-            console.log(`marker ${marker}`)
-            body.appendChild(mark);
-        }
-    }
-    return{displayBoard};
+// const Display = (function(){
+//     const displayBoard = function(gameboard){
+//         const body = document.querySelector("body");
+//         console.log(gameboard);
+//         for (let marker of gameboard){
+//             let mark = document.createElement("span");
+//             mark.textContent=marker;
+//             console.log(`marker ${marker}`)
+//             body.appendChild(mark);
+//         }
+//     }
+//     return{displayBoard};
     
-})()
+// })()
 
 
 
