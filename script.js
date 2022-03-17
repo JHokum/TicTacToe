@@ -139,6 +139,11 @@ const markArray = function(){
     return Array.from(markNodes);
 }
 
+const markBoxArray = function(){
+    const markBoxNodes = document.querySelectorAll(".markBox");
+    return Array.from(markBoxNodes);
+}
+
 
 //placeholder function to determine the marker for the turn
 const playerTurn = function(player){
@@ -179,10 +184,20 @@ const listenerFunction = function(e){
     
     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
 
-    winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col);
+    if(winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col)){
+        removeEventListeners(markArray());
+        addGameOverClass(markBoxArray());
+        removeMarkBoxClass(markBoxArray());
+        
+        alert("Game Over!");
+    }
+    else{
+        e.target.removeEventListener("click",listenerFunction);
+        Game.changeTurn();
+    }
+    
 
-    e.target.removeEventListener("click",listenerFunction);
-    Game.changeTurn();
+    
 }
 //function for adding listeners
 const addEventListeners = function(markArray){
@@ -190,6 +205,26 @@ const addEventListeners = function(markArray){
         
         // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
         mark.addEventListener("click",listenerFunction);
+    }
+}
+
+const removeEventListeners = function(markArray){
+    for (let mark of markArray){
+        mark.removeEventListener("click",listenerFunction);
+    }
+}
+
+const removeMarkBoxClass = function(markBoxArray){
+    for (let markBox of markBoxArray){
+        // console.log(markBox);
+        markBox.classList.remove("markBox");
+    }
+}
+
+const addGameOverClass = function (markBoxArray){
+    for (let markBox of markBoxArray){
+        console.log("add this game over")
+        markBox.classList.add("gameOver");
     }
 }
 
@@ -254,6 +289,7 @@ const winCheckModule = (function(){
             for (let element of rowArray){
                 element.classList.add("winner");
             }
+            return true;
         }
         else if (winCheckColHelper(gameboardCol,col)){
             // alert("col is a winner");
@@ -261,6 +297,7 @@ const winCheckModule = (function(){
             for (let element of colArray){
                 element.classList.add("winner");
             }
+            return true;
         }
     }
 

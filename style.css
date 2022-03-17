@@ -45,3 +45,9 @@ body{
 .winner{
     background-color: fuchsia;
 }
+.gameOver{
+    border:2px rgb(255, 0, 200) solid;
+    display: grid;
+    justify-items:center;
+    align-items:center;
+}
