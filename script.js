@@ -152,67 +152,52 @@ const playerTurn = function(player){
 
 
 
-//Listener function
-// const listenerFunction = function(e){
-//     e.target.textContent=playerTurn(Game.getTurn());
-    
-    
-//     Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
-//     if(winCheck(e.target.dataset.col,e.target.dataset.row)){
-//         alert("Winner winner chicken dinner");
-//         let zoop = Array.from(document.querySelectorAll("[data-row='1']"))
-//         for (let zeep of zoop){
-//             zeep.classList.add("winner");
-//         }
-//     }
-//     console.log(winCheck(e.target.dataset.col,e.target.dataset.row));
-//     e.target.removeEventListener("click",listenerFunction);
-//     Game.changeTurn();
-// }
-// //function for adding listeners
-// const addEventListeners = function(markArray){
-//     for (let mark of markArray){
+
+//Module for interacting with listeners
+const ListenerModule = (function(){
+    const listenerFunction = function(e){
+        e.target.textContent=playerTurn(Game.getTurn());
         
-//         // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
-//         mark.addEventListener("click",listenerFunction);
-//     }
-// }
-
-const listenerFunction = function(e){
-    e.target.textContent=playerTurn(Game.getTurn());
-    
-    
-    Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
-
-    if(winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col)){
-        removeEventListeners(markArray());
-        addGameOverClass(markBoxArray());
-        removeMarkBoxClass(markBoxArray());
         
-        alert("Game Over!");
-    }
-    else{
-        e.target.removeEventListener("click",listenerFunction);
-        Game.changeTurn();
-    }
+        Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
     
-
-    
-}
-//function for adding listeners
-const addEventListeners = function(markArray){
-    for (let mark of markArray){
+        if(winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col)){
+            removeEventListeners(markArray());
+            addGameOverClass(markBoxArray());
+            removeMarkBoxClass(markBoxArray());
+            
+            alert("Game Over!");
+        }
+        else{
+            e.target.removeEventListener("click",listenerFunction);
+            Game.changeTurn();
+        }
         
-        // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
-        mark.addEventListener("click",listenerFunction);
+    
+        
     }
-}
 
-const removeEventListeners = function(markArray){
-    for (let mark of markArray){
-        mark.removeEventListener("click",listenerFunction);
+    const addEventListeners = function(markArray){
+        for (let mark of markArray){
+            
+            // mark.addEventListener("click",e=>e.target.textContent=playerTurn(turn));
+            mark.addEventListener("click",listenerFunction);
+        }
     }
-}
+    
+    const removeEventListeners = function(markArray){
+        for (let mark of markArray){
+            mark.removeEventListener("click",listenerFunction);
+        }
+    }
+
+    return {addEventListeners}
+})()
+
+
+
+
+
 
 const removeMarkBoxClass = function(markBoxArray){
     for (let markBox of markBoxArray){
@@ -229,41 +214,26 @@ const addGameOverClass = function (markBoxArray){
 }
 
 
-//add event listeners to mark boxes
-// const player1 = Human("X");
-// const player2 = Human("O");
-
-// addEventListeners(markArray());
 const header = document.querySelector(".header");
-// Game.gameStart(2);
+
 
 //workzone -------------------------------------------------
 const pvpButton = document.getElementById("pvp");
 
 const pvpListenerFunction = function(){
     Game.gameStart(1);
-    addEventListeners(markArray());
+    ListenerModule.addEventListeners(markArray());
 }
 
 pvpButton.addEventListener("click",pvpListenerFunction);
 
-//game creator
 
-
-//win check
-/* Based on the selection we know where we are in the row or column.
-Based on the row or column we can look at the row and column to check for win condition.
-There is probably an array we can use for this.*/
-const winCheck = function(col,row){
-    return Gameboard.getColBoard()[col].every(markArrayChecker) || Gameboard.getRowBoard()[row].every(markArrayChecker);
-}
 
 
 
 
 //Define a winchecker module
-/* Module can take in a Gameboard object to investigate and manipulate.
-   Module is responsible for checking for win condition and setting the winner class.*/
+//Module is responsible for checking for win condition and setting the winner class.
 
 const winCheckModule = (function(){
     const markArrayChecker = function(element){
