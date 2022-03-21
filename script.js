@@ -162,7 +162,7 @@ const ListenerModule = (function(){
         
         Gameboard.changeMark(e.target.dataset.col,e.target.dataset.row,e.target.textContent)
     
-        if(winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col)){
+        if(winCheckModule.winHighLight(Gameboard.getColBoard(),Gameboard.getRowBoard(),e.target.dataset.row,e.target.dataset.col)||winCheckModule.diagHighlight(Gameboard.getColBoard())){
             removeEventListeners(markArray());
             addGameOverClass(markBoxArray());
             removeMarkBoxClass(markBoxArray());
@@ -279,19 +279,22 @@ const winCheckModule = (function(){
     //working with the diagonal
 
     const diagHelper = function(colArray){
-        return colArray[0,0]==colArray[1,1]==colArray[2,2]||colArray[0,2]==colArray[1,1]==colArray[2,0] ? true:false;
+        let newArrayOne = [colArray[0][0],colArray[1][1],colArray[2][2]];
+        let newArrayTwo = [colArray[0][2],colArray[1][1],colArray[2][0]];
+        return newArrayOne.every(markArrayChecker) || newArrayTwo.every(markArrayChecker);
     }
 
-    const diagHighlight = function(){
+    const diagHighlight = function(gameboardCol){
         if (diagHelper(gameboardCol)){
             let diagArray = Array.from(document.querySelectorAll('[data-diag="true"]'));
             for (let element of diagArray){
                 element.classList.add("winner");
             }
+            return true;
         }
     }
 
    
 
-    return {winHighLight,diagHighlight}
+    return {winHighLight,diagHighlight,diagHelper}
 })()
