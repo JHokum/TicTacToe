@@ -281,16 +281,32 @@ const winCheckModule = (function(){
     const diagHelper = function(colArray){
         let newArrayOne = [colArray[0][0],colArray[1][1],colArray[2][2]];
         let newArrayTwo = [colArray[0][2],colArray[1][1],colArray[2][0]];
-        return newArrayOne.every(markArrayChecker) || newArrayTwo.every(markArrayChecker);
+        // return newArrayOne.every(markArrayChecker) || newArrayTwo.every(markArrayChecker);
+        if (newArrayOne.every(markArrayChecker)){
+            return 1;
+        }
+        else if (newArrayTwo.every(markArrayChecker)){
+            return 2;
+        }
     }
 
     const diagHighlight = function(gameboardCol){
-        if (diagHelper(gameboardCol)){
-            let diagArray = Array.from(document.querySelectorAll('[data-diag="true"]'));
-            for (let element of diagArray){
-                element.classList.add("winner");
-            }
-            return true;
+        let diagArray;
+
+        switch (diagHelper(gameboardCol)){
+            
+            case (1):
+                 diagArray = Array.from(document.querySelectorAll('[data-diag1="true"'))
+                for(let element of diagArray){
+                    element.classList.add("winner");
+                }
+                return true;
+            case(2):
+                diagArray = Array.from(document.querySelectorAll('[data-diag2="true"'))
+                for (let element of diagArray){
+                    element.classList.add("winner");
+                }
+                return true;
         }
     }
 
