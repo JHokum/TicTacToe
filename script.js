@@ -102,6 +102,7 @@ const Gameboard = (function(){
     const gameboard = ["","","","","","","","",""];  //gameboard array
     const colBoard = [["","",""],["","",""],["","",""]];  //arranged as an array of columns
     const rowBoard = [["","",""],["","",""],["","",""]];  //arranged as an array of rows
+    
     const changeMark = function(col,row,mark){                  //function to change mark in array
         colBoard[col][row]=mark;
         rowBoard[row][col]=mark;
@@ -175,6 +176,10 @@ const ListenerModule = (function(){
         
     
         
+    }
+
+    const diagListener = function(e){
+
     }
 
     const addEventListeners = function(markArray){
@@ -271,7 +276,22 @@ const winCheckModule = (function(){
         }
     }
 
+    //working with the diagonal
+
+    const diagHelper = function(colArray){
+        return colArray[0,0]==colArray[1,1]==colArray[2,2]||colArray[0,2]==colArray[1,1]==colArray[2,0] ? true:false;
+    }
+
+    const diagHighlight = function(){
+        if (diagHelper(gameboardCol)){
+            let diagArray = Array.from(document.querySelectorAll('[data-diag="true"]'));
+            for (let element of diagArray){
+                element.classList.add("winner");
+            }
+        }
+    }
+
    
 
-    return {winHighLight}
+    return {winHighLight,diagHighlight}
 })()
